@@ -22,6 +22,10 @@ module.exports = {
           primary: "#8775d0",
           secondary: "#98bbaf",
           tertiary: "#80ccf4",
+        },
+        support: {
+          red: "#d03025",
+          green: "#4dbc19"
         }
       }
     },
