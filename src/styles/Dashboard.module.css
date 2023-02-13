@@ -163,6 +163,10 @@
   }
 }
 
+.vercelLogo {
+  filter: invert(0);
+}
+
 @media (prefers-reduced-motion) {
   .thirteen::before {
     animation: none;
@@ -259,7 +263,7 @@
 
 @media (prefers-color-scheme: dark) {
   .vercelLogo {
-    filter: invert(1);
+    filter: invert(0);
   }
 
   .logo,
