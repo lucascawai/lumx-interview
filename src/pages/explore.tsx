@@ -9,7 +9,15 @@ export default function Explore() {
   return (
     <>
       <Layout>
-        <div className="text-gray-100">Não sei</div>
+        <CardCollection />
+        <Sales />
+        <SalesFloorAndAveragePrice />
+        <div className="mx-4 mt-6 sm:mx-14 sm:mt-16">
+          <div className="flex flex-col sm:flex-row">
+            <HypeTrend />
+            <TrendingTraits />
+          </div>
+        </div>
       </Layout>
     </>
   )

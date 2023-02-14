@@ -1,19 +1,14 @@
 import Image from 'next/image'
+import { useEffect } from 'react'
 
-export default function CardCollection() {
+const CardCollection = () => {
   return (
     <>
-      <div className="mx-4 mt-6 bg-gray-700 sm:mx-14 sm:mt-16 sm:mb-8">
+      <div className="mx-4 mt-6 bg-gray-700 sm:mx-14 sm:mt-16">
         <div className="flex flex-col content-center sm:flex-row">
           <div className="flex flex-row content-center border-b border-gray-600 sm:border-0">
-            <div className="my-5 ml-3">
-              <Image
-                src="/bored-img.png"
-                alt="BoredApe"
-                width={32}
-                height={32}
-                className="bg-gray-700"
-              />
+            <div className="relative my-3 ml-6 h-8 w-8 sm:my-auto sm:h-20 sm:w-20">
+              <Image src="/bored-img.png" alt="BoredApe" fill className="bg-gray-700" />
             </div>
             <div className="my-auto ml-3 flex flex-col content-center">
               <div className="text-baseline text-bold text-gray-100">Bored Ape Yacht Club</div>
@@ -125,3 +120,5 @@ export default function CardCollection() {
     </>
   )
 }
+
+export default CardCollection
