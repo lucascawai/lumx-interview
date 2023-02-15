@@ -1,21 +1,26 @@
-import { MouseEvent, useState } from 'react'
+import { Dispatch, MouseEvent } from 'react'
 import Image from 'next/image'
+import { rangesTrendingTraits } from './TrendingTraits'
 
-const TrendingTraitsHeader = () => {
-  const [timeSelected, setTimeSelected] = useState(0)
-  const times = ['1M', '5M', '15M', '30M', '1H', '1D']
-
+const TrendingTraitsHeader = ({
+  rangeSelected,
+  setRangeSelected,
+}: {
+  rangeSelected: number
+  setRangeSelected: Dispatch<React.SetStateAction<number>>
+}) => {
   const handleClick = (_: MouseEvent, index: number): void => {
-    setTimeSelected(index)
+    setRangeSelected(index)
   }
+
   return (
     <>
       <div className="flex flex-row justify-end">
         <div className="hidden flex-auto bg-gray-800 sm:block"></div>
         <div className="flex flex-auto content-center justify-between bg-gray-700 py-5 sm:grow sm:justify-end">
           <div className="text-xs leading-6 text-gray-600 sm:my-auto">Time:</div>
-          {times.map((value, index) => {
-            if (index === timeSelected) {
+          {rangesTrendingTraits.map((value, index) => {
+            if (index === rangeSelected) {
               return (
                 <button
                   type="button"
