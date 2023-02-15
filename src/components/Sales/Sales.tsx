@@ -9,12 +9,8 @@ const Sales = () => {
 
   return (
     <>
-      <div className="mx-4 mt-6 bg-gray-700 sm:mx-14 sm:mt-16">
-        <SalesHeader rangeSelected={rangeSelected} setRangeSelected={setRangeSelected} />
-      </div>
-      <div className="mx-4 mt-4 bg-gray-700 sm:mx-14 sm:mt-6">
-        <SalesGraph range={rangesSales[rangeSelected]} />
-      </div>
+      <SalesHeader rangeSelected={rangeSelected} setRangeSelected={setRangeSelected} />
+      <SalesGraph range={rangesSales[rangeSelected]} />
     </>
   )
 }

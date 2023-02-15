@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect, useState } from 'react'
+import { Dispatch, MouseEvent, MouseEventHandler, useEffect, useState } from 'react'
 import {
   Chart as ChartJS,
   LinearScale,
@@ -87,47 +87,59 @@ const SalesGraph = ({ range }: { range: string }) => {
 
   return (
     <>
-      <div className="flex flex-row justify-between">
-        <div className="text-bold mt-4 ml-4 text-sm leading-6 text-gray-500 sm:ml-6">
-          PRICE IN ETH
-        </div>
-        <div className="flex flex-row content-baseline">
-          <div className="text-bold mt-3 h-6 text-sm leading-6 text-gray-500 sm:mt-4">
-            Outliners:{' '}
+      <div className="mx-4 mt-4 bg-gray-700 sm:mx-14 sm:mt-6">
+        <div className="flex flex-row justify-between">
+          <div className="text-bold mt-4 ml-4 text-sm leading-6 text-gray-500 sm:ml-6">
+            PRICE IN ETH
           </div>
-          <button
-            type="button"
-            onClick={toggleOutliners}
-            disabled={outliners}
-            className={
-              outliners
-                ? 'mt-2 ml-3 h-8 w-12 rounded-l bg-gray-100 text-center align-middle text-gray-600 sm:mt-4'
-                : 'mt-2 ml-3 h-8 w-12 rounded-l bg-gray-500 text-center align-middle text-gray-400 sm:mt-4'
-            }
-          >
-            ON
-          </button>
-          <button
-            type="button"
-            onClick={toggleOutliners}
-            disabled={!outliners}
-            className={
-              !outliners
-                ? 'mt-2 mr-2 h-8 w-12 rounded-r bg-gray-100 text-center align-middle text-gray-600 sm:mt-4 sm:mr-6'
-                : 'mt-2 mr-2 h-8 w-12 rounded-r bg-gray-500 text-center align-middle text-gray-400 sm:mt-4 sm:mr-6'
-            }
-          >
-            OFF
-          </button>
+          <OutlinersToggle outliners={outliners} toggleOutliners={toggleOutliners} />
         </div>
+        <Chart
+          type="line"
+          data={data}
+          options={options}
+          className="mx-1 max-w-md p-3 sm:mx-0 sm:max-h-96 sm:max-w-none sm:p-6"
+        />
       </div>
-      <Chart
-        type="line"
-        data={data}
-        options={options}
-        className="mx-1 max-w-md p-3 sm:mx-0 sm:max-h-96 sm:max-w-none sm:p-6"
-      />
     </>
+  )
+}
+
+const OutlinersToggle = ({
+  outliners,
+  toggleOutliners,
+}: {
+  outliners: boolean
+  toggleOutliners: MouseEventHandler
+}) => {
+  return (
+    <div className="flex flex-row content-baseline">
+      <div className="text-bold mt-3 h-6 text-sm leading-6 text-gray-500 sm:mt-4">Outliners: </div>
+      <button
+        type="button"
+        onClick={toggleOutliners}
+        disabled={outliners}
+        className={
+          outliners
+            ? 'mt-2 ml-3 h-8 w-12 rounded-l bg-gray-100 text-center align-middle text-gray-600 sm:mt-4'
+            : 'mt-2 ml-3 h-8 w-12 rounded-l bg-gray-500 text-center align-middle text-gray-400 sm:mt-4'
+        }
+      >
+        ON
+      </button>
+      <button
+        type="button"
+        onClick={toggleOutliners}
+        disabled={!outliners}
+        className={
+          !outliners
+            ? 'mt-2 mr-2 h-8 w-12 rounded-r bg-gray-100 text-center align-middle text-gray-600 sm:mt-4 sm:mr-6'
+            : 'mt-2 mr-2 h-8 w-12 rounded-r bg-gray-500 text-center align-middle text-gray-400 sm:mt-4 sm:mr-6'
+        }
+      >
+        OFF
+      </button>
+    </div>
   )
 }
 

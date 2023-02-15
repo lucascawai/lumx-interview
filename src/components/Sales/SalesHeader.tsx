@@ -1,5 +1,25 @@
-import { Dispatch, MouseEvent } from 'react'
+import { Dispatch, MouseEvent, PropsWithChildren } from 'react'
 import { rangesSales } from './Sales'
+
+const ContentSalesHeader: React.FC<PropsWithChildren> = ({ children }) => {
+  return (
+    <div className="mx-4 mt-6 bg-gray-700 sm:mx-14 sm:mt-16">
+      <div className="flex flex-col sm:flex-row">{children}</div>
+    </div>
+  )
+}
+const ContentTitleSalesHeader = ({ title, subtitle }: { title: string; subtitle: string }) => {
+  return (
+    <div className="flex flex-row content-baseline justify-between sm:flex-col">
+      <div className="text-bold ml-3 mt-3 align-middle text-lg text-gray-100 sm:mt-6 sm:ml-6">
+        {title}
+      </div>
+      <div className="text-bold mr-3 mt-3 align-middle text-sm text-gray-500 sm:ml-6 sm:mb-6">
+        {subtitle}
+      </div>
+    </div>
+  )
+}
 
 const SalesHeader = ({
   rangeSelected,
@@ -13,15 +33,8 @@ const SalesHeader = ({
   }
 
   return (
-    <div className="flex flex-col sm:flex-row">
-      <div className="flex flex-row content-baseline justify-between sm:flex-col">
-        <div className="text-bold ml-3 mt-3 align-middle text-lg text-gray-100 sm:mt-6 sm:ml-6">
-          Sales
-        </div>
-        <div className="text-bold mr-3 mt-3 align-middle text-sm text-gray-500 sm:ml-6 sm:mb-6">
-          Showing 2400 sales
-        </div>
-      </div>
+    <ContentSalesHeader>
+      <ContentTitleSalesHeader title={'Sales'} subtitle={'Showing 2300 sales'} />
       <div className="my-5 ml-3 mr-3 flex content-center justify-between sm:mr-5 sm:grow sm:justify-end">
         <div className="text-xs leading-6 text-gray-600 sm:my-auto">Time:</div>
         {rangesSales.map((value, index) => {
@@ -49,7 +62,7 @@ const SalesHeader = ({
           )
         })}
       </div>
-    </div>
+    </ContentSalesHeader>
   )
 }
 

@@ -12,7 +12,6 @@ import {
   Filler,
 } from 'chart.js'
 import { Chart } from 'react-chartjs-2'
-import { faker } from '@faker-js/faker'
 import Image from 'next/image'
 import getLabels from '@/utils/getLabels'
 import getDataHypeTrendSalesAmount from '@/utils/getDataHypeTrendSalesAmount'
@@ -30,7 +29,6 @@ ChartJS.register(
   Filler
 )
 
-const labels = Array.from(Array(10).keys())
 export const options = {
   responsize: true,
   plugins: {

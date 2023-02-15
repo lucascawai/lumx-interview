@@ -14,11 +14,8 @@ import {
 } from 'chart.js'
 import { Chart } from 'react-chartjs-2'
 import 'chartjs-adapter-moment'
-import moment from 'moment'
-import { faker } from '@faker-js/faker'
 import Image from 'next/image'
 import getLabels from '@/utils/getLabels'
-import getData from '@/utils/getDataSales'
 import getDataFloorAndAveragePrice from '@/utils/getDataFloorAndAveragePrice'
 
 ChartJS.register(
@@ -34,30 +31,6 @@ ChartJS.register(
   Filler,
   TimeScale
 )
-
-// const labels = ['21:00', '22:00', '23:00', '00:00', '01:00', '02:00', '03:00', '04:00', '05:00']
-
-/* const now = moment()
-const labels = Array.from(Array(24).fill(0)).map((el) => {
-  return now.subtract({ hours: 1 }).format('HH:mm')
-})reverse()
- */
-/* const now = moment()
-const labels = Array.from(Array(7).fill(0)).map((el) => {
-  return now.subtract({ days: 1 }).format('ll')
-}).reverse() */
-/* const now = moment()
-const labels = Array.from(Array(30).fill(0))
-  .map((el) => {
-    return now.subtract({ days: 1 }).format('ll')
-  })
-  .reverse() */
-const now = moment()
-const labels = Array.from(Array(30).fill(0))
-  .map((el) => {
-    return now.subtract({ days: 3 }).format('ll')
-  })
-  .reverse()
 
 export const options = {
   responsive: true,
@@ -101,20 +74,22 @@ const SalesFloorAndAveragePriceGraph = ({ range }: { range: string }) => {
 
   return (
     <>
-      <Chart
-        type="line"
-        data={data}
-        options={options}
-        className="mx-1 max-w-md p-3 sm:mx-0 sm:max-h-96 sm:max-w-none sm:p-6"
-      />
-      <div className="hidden sm:flex sm:flex-row sm:justify-center">
-        <div className="my-6 mr-5 flex h-6 w-32 flex-row">
-          <Image src="/purple-line.svg" alt="Purple Line" width={30} height={2} />
-          <div className="text-bold ml-3 text-sm text-gray-100">Floor Price</div>
-        </div>
-        <div className="my-6 ml-5 flex h-6 w-32 flex-row">
-          <Image src="/dotted-line.svg" alt="Dotted Line" width={18} height={2} />
-          <div className="text-bold ml-3 text-sm text-gray-100">Average Price</div>
+      <div className="mx-4 mt-4 bg-gray-700 sm:mx-14 sm:mt-6">
+        <Chart
+          type="line"
+          data={data}
+          options={options}
+          className="mx-1 max-w-md p-3 sm:mx-0 sm:max-h-96 sm:max-w-none sm:p-6"
+        />
+        <div className="hidden sm:flex sm:flex-row sm:justify-center">
+          <div className="my-6 mr-5 flex h-6 w-32 flex-row">
+            <Image src="/purple-line.svg" alt="Purple Line" width={30} height={2} />
+            <div className="text-bold ml-3 text-sm text-gray-100">Floor Price</div>
+          </div>
+          <div className="my-6 ml-5 flex h-6 w-32 flex-row">
+            <Image src="/dotted-line.svg" alt="Dotted Line" width={18} height={2} />
+            <div className="text-bold ml-3 text-sm text-gray-100">Average Price</div>
+          </div>
         </div>
       </div>
     </>

@@ -1,6 +1,44 @@
-import { Dispatch, MouseEvent, useState } from 'react'
+import { Dispatch, MouseEvent } from 'react'
 import Image from 'next/image'
 import { rangesHypeTrend } from './HypeTrend'
+
+const ContentTitleHypeTrendHeader = ({
+  title,
+  thermometer,
+}: {
+  title: string
+  thermometer: string
+}) => {
+  return (
+    <div className="bg-gray-700">
+      <div className="flex flex-row justify-between">
+        <div className="flex flex-row content-baseline justify-between sm:flex-col">
+          <div className="text-bold my-3 ml-3 align-middle text-lg text-gray-100 sm:my-4 sm:ml-6">
+            {title}
+          </div>
+        </div>
+        <div className="my-3 ml-3 flex content-center justify-between sm:grow sm:justify-end">
+          <div className="text-xs leading-6 text-gray-600 sm:my-auto">HYPER THERMOMETER:</div>
+          <button
+            disabled
+            className=" ml-3 mr-6 flex h-8 w-32 flex-row content-center justify-evenly rounded bg-support-green/10 text-center sm:my-auto sm:h-9"
+          >
+            <Image
+              src="/trending-up.svg"
+              alt="Trending up"
+              width={16}
+              height={10}
+              className="my-auto"
+            />
+            <div className="text-bold my-auto text-sm leading-6 text-support-green">
+              {thermometer}
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 const HypeTrendHeader = ({
   rangeSelected,
@@ -44,33 +82,7 @@ const HypeTrendHeader = ({
           })}
         </div>
       </div>
-      <div className="bg-gray-700">
-        <div className="flex flex-row justify-between">
-          <div className="flex flex-row content-baseline justify-between sm:flex-col">
-            <div className="text-bold my-3 ml-3 align-middle text-lg text-gray-100 sm:my-4 sm:ml-6">
-              Hype Trend
-            </div>
-          </div>
-          <div className="my-3 ml-3 flex content-center justify-between sm:grow sm:justify-end">
-            <div className="text-xs leading-6 text-gray-600 sm:my-auto">HYPER THERMOMETER:</div>
-            <button
-              disabled
-              className=" ml-3 mr-6 flex h-8 w-32 flex-row content-center justify-evenly rounded bg-support-green/10 text-center sm:my-auto sm:h-9"
-            >
-              <Image
-                src="/trending-up.svg"
-                alt="Trending up"
-                width={16}
-                height={10}
-                className="my-auto"
-              />
-              <div className="text-bold my-auto text-sm leading-6 text-support-green">
-                VERY HYPED
-              </div>
-            </button>
-          </div>
-        </div>
-      </div>
+      <ContentTitleHypeTrendHeader title={'Hype Trend'} thermometer={'VERY HYPED'} />
     </>
   )
 }

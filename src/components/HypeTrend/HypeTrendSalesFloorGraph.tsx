@@ -12,7 +12,6 @@ import {
   Filler,
 } from 'chart.js'
 import { Chart } from 'react-chartjs-2'
-import { faker } from '@faker-js/faker'
 import Image from 'next/image'
 import getLabels from '@/utils/getLabels'
 import getDataHypeTrendSalesFloor from '@/utils/getDataHypeTrendSalesFloor'
