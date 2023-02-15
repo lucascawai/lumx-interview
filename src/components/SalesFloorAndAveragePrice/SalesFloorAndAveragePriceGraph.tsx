@@ -10,10 +10,16 @@ import {
   LineController,
   BarController,
   Filler,
+  TimeScale,
 } from 'chart.js'
 import { Chart } from 'react-chartjs-2'
+import 'chartjs-adapter-moment'
+import moment from 'moment'
 import { faker } from '@faker-js/faker'
 import Image from 'next/image'
+import getLabels from '@/utils/getLabels'
+import getData from '@/utils/getDataSales'
+import getDataFloorAndAveragePrice from '@/utils/getDataFloorAndAveragePrice'
 
 ChartJS.register(
   LinearScale,
@@ -25,10 +31,34 @@ ChartJS.register(
   Tooltip,
   LineController,
   BarController,
-  Filler
+  Filler,
+  TimeScale
 )
 
-const labels = Array.from(Array(10).keys())
+// const labels = ['21:00', '22:00', '23:00', '00:00', '01:00', '02:00', '03:00', '04:00', '05:00']
+
+/* const now = moment()
+const labels = Array.from(Array(24).fill(0)).map((el) => {
+  return now.subtract({ hours: 1 }).format('HH:mm')
+})reverse()
+ */
+/* const now = moment()
+const labels = Array.from(Array(7).fill(0)).map((el) => {
+  return now.subtract({ days: 1 }).format('ll')
+}).reverse() */
+/* const now = moment()
+const labels = Array.from(Array(30).fill(0))
+  .map((el) => {
+    return now.subtract({ days: 1 }).format('ll')
+  })
+  .reverse() */
+const now = moment()
+const labels = Array.from(Array(30).fill(0))
+  .map((el) => {
+    return now.subtract({ days: 3 }).format('ll')
+  })
+  .reverse()
+
 export const options = {
   responsive: true,
   plugins: {
@@ -41,8 +71,6 @@ export const options = {
   },
   scales: {
     x: {
-      min: 0,
-      max: 20,
       grid: {
         display: false,
       },
@@ -67,33 +95,10 @@ export const options = {
   },
 }
 
-export const data = {
-  labels,
-  datasets: [
-    {
-      type: 'line' as const,
-      borderColor: '#8775D0',
-      backgroundColor: 'rgba(135,117,208, 0.1)',
-      fill: 'origin',
-      borderWidth: 2,
-      tension: 0.3,
-      data: labels.map(() => faker.datatype.number({ min: 19, max: 24 })),
-      pointRadius: 0,
-      z: -1,
-    },
-    {
-      type: 'line' as const,
-      tension: 0.3,
-      data: labels.map(() => faker.datatype.number({ min: 19, max: 24 })),
-      borderColor: '#80CCF4',
-      borderWidth: 2,
-      pointRadius: 0,
-      borderDash: [5, 5],
-    },
-  ],
-}
+const SalesFloorAndAveragePriceGraph = ({ range }: { range: string }) => {
+  const labels = getLabels(range)
+  const data = getDataFloorAndAveragePrice(labels)
 
-const SalesFloorAndAveragePriceGraph = () => {
   return (
     <>
       <Chart

@@ -14,6 +14,8 @@ import {
 import { Chart } from 'react-chartjs-2'
 import { faker } from '@faker-js/faker'
 import Image from 'next/image'
+import getLabels from '@/utils/getLabels'
+import getDataHypeTrendSalesFloor from '@/utils/getDataHypeTrendSalesFloor'
 
 ChartJS.register(
   LinearScale,
@@ -59,23 +61,10 @@ export const options = {
   },
 }
 
-export const data = {
-  labels,
-  datasets: [
-    {
-      type: 'line' as const,
-      borderColor: '#4DBC19',
-      backgroundColor: 'rgba(77,188,25, 0.05)',
-      fill: 'origin',
-      borderWidth: 2,
-      tension: 0.3,
-      data: [0.1, 0.2, 0.4, 0.5, 0.3, 0.1, 0, 0.2, 0.3, 0.2, 0.4, 0.5, 0.3, 0.1, 0, 0.2, 0.3],
-      pointRadius: 0,
-    },
-  ],
-}
+const HypeTrendSalesFloorGraph = ({ range }: { range: string }) => {
+  const labels = getLabels(range)
+  const data = getDataHypeTrendSalesFloor(labels)
 
-const HypeTrendSalesFloorGraph = () => {
   return (
     <>
       <div className=" bg-gray-700">

@@ -1,4 +1,4 @@
-import React from 'react'
+import { MouseEvent, useEffect, useState } from 'react'
 import {
   Chart as ChartJS,
   LinearScale,
@@ -10,9 +10,13 @@ import {
   Tooltip,
   LineController,
   BarController,
+  Tick,
+  CoreScaleOptions,
+  Scale,
 } from 'chart.js'
 import { Chart } from 'react-chartjs-2'
-import { faker } from '@faker-js/faker'
+import getDataSales from '@/utils/getDataSales'
+import getLabelsSales from '@/utils/getLabelsSales'
 
 ChartJS.register(
   LinearScale,
@@ -26,7 +30,6 @@ ChartJS.register(
   BarController
 )
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July']
 export const options = {
   responsive: true,
   plugins: {
@@ -36,10 +39,18 @@ export const options = {
   },
   scales: {
     x: {
-      min: 0,
-      max: 6,
       grid: {
         display: false,
+      },
+      ticks: {
+        callback: function (
+          this: Scale<CoreScaleOptions>,
+          value: number | string,
+          index: number,
+          ticks: Tick[]
+        ): string | number | string[] | number[] {
+          return index % 12 ? '' : this.getLabelForValue(value as number)
+        },
       },
     },
     y: {
@@ -49,7 +60,7 @@ export const options = {
         drawTicks: false,
       },
       ticks: {
-        callback: function (value: any, index: number) {
+        callback: function (value: number | string, index: number) {
           if (value < 0) {
             return index !== 0 ? 'VOL' : ''
           }
@@ -65,52 +76,15 @@ export const options = {
   },
 }
 
-export const data = {
-  labels,
-  datasets: [
-    {
-      type: 'scatter' as const,
-      borderColor: 'rgb(255, 99, 132)',
-      borderWidth: 2,
-      fill: false,
-      data: Array.from({ length: 100 }, () => ({
-        x: faker.datatype.float({ min: 0, max: 6 }),
-        y: faker.datatype.float({ min: 0, max: 0.5 }),
-      })),
-    },
-    {
-      type: 'scatter' as const,
-      backgroundColor: 'rgb(75, 192, 192)',
-      data: Array.from({ length: 100 }, () => ({
-        x: faker.datatype.float({ min: 0, max: 6 }),
-        y: faker.datatype.float({ min: 0, max: 0.5 }),
-      })),
-      borderColor: 'white',
-      borderWidth: 2,
-    },
-    {
-      type: 'scatter' as const,
-      backgroundColor: 'rgb(53, 162, 235)',
-      data: Array.from({ length: 100 }, () => ({
-        x: faker.datatype.float({ min: 0, max: 6 }),
-        y: faker.datatype.float({ min: 0, max: 0.5 }),
-      })),
-    },
-    {
-      type: 'bar' as const,
-      backgroundColor: 'rgb(10, 12, 192)',
-      data: Array.from({ length: 100 }, () => ({
-        x: faker.datatype.float({ min: 0, max: 6 }),
-        y: faker.datatype.float({ min: 0, max: 0.5 }),
-      })),
-      borderColor: 'white',
-      borderWidth: 2,
-      yAxisID: 'y1',
-    },
-  ],
-}
+const SalesGraph = ({ range }: { range: string }) => {
+  const [outliners, setOutliners] = useState(true)
+  const labels = getLabelsSales(range)
+  const data = getDataSales(labels, outliners)
 
-const SalesGraph = () => {
+  const toggleOutliners = (_: MouseEvent): void => {
+    setOutliners(!outliners)
+  }
+
   return (
     <>
       <div className="flex flex-row justify-between">
@@ -121,16 +95,34 @@ const SalesGraph = () => {
           <div className="text-bold mt-3 h-6 text-sm leading-6 text-gray-500 sm:mt-4">
             Outliners:{' '}
           </div>
-          <div className="mt-2 ml-3 h-8 w-12 rounded-l bg-gray-100 text-center align-middle text-gray-600 sm:mt-4">
+          <button
+            type="button"
+            onClick={toggleOutliners}
+            disabled={outliners}
+            className={
+              outliners
+                ? 'mt-2 ml-3 h-8 w-12 rounded-l bg-gray-100 text-center align-middle text-gray-600 sm:mt-4'
+                : 'mt-2 ml-3 h-8 w-12 rounded-l bg-gray-500 text-center align-middle text-gray-400 sm:mt-4'
+            }
+          >
             ON
-          </div>
-          <div className="mt-2 mr-2 h-8 w-12 rounded-r bg-gray-500 text-center align-middle text-gray-400 sm:mt-4 sm:mr-6">
+          </button>
+          <button
+            type="button"
+            onClick={toggleOutliners}
+            disabled={!outliners}
+            className={
+              !outliners
+                ? 'mt-2 mr-2 h-8 w-12 rounded-r bg-gray-100 text-center align-middle text-gray-600 sm:mt-4 sm:mr-6'
+                : 'mt-2 mr-2 h-8 w-12 rounded-r bg-gray-500 text-center align-middle text-gray-400 sm:mt-4 sm:mr-6'
+            }
+          >
             OFF
-          </div>
+          </button>
         </div>
       </div>
       <Chart
-        type="scatter"
+        type="line"
         data={data}
         options={options}
         className="mx-1 max-w-md p-3 sm:mx-0 sm:max-h-96 sm:max-w-none sm:p-6"
